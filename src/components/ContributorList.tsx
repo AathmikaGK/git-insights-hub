@@ -14,7 +14,7 @@ export function ContributorList({ data }: ContributorListProps) {
       <h3 className="text-sm font-display uppercase tracking-wider text-muted-foreground mb-4">
         Top Contributors
       </h3>
-      <div className="h-56 mb-4">
+      <div className="h-44 md:h-56 mb-4">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={top10} layout="vertical">
             <XAxis

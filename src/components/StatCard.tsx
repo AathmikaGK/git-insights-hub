@@ -21,7 +21,7 @@ export function StatCard({ label, value, icon: Icon, accent = "green" }: StatCar
         <span className="text-xs text-muted-foreground uppercase tracking-wider font-display">{label}</span>
         <Icon className={`h-4 w-4 ${accentMap[accent]}`} />
       </div>
-      <p className={`text-2xl font-bold font-display ${accentMap[accent]}`}>
+      <p className={`text-xl md:text-2xl font-bold font-display ${accentMap[accent]}`}>
         {typeof value === "number" ? value.toLocaleString() : value}
       </p>
     </div>

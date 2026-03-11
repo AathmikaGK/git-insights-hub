@@ -13,11 +13,11 @@ export function CommitTimeline({ data, title }: CommitTimelineProps) {
   }));
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 animate-slide-up">
+    <div className="bg-card border border-border rounded-lg p-4 md:p-6 animate-slide-up">
       <h3 className="text-sm font-display uppercase tracking-wider text-muted-foreground mb-4">
-        Commit Activity (Last Year)
+        {title ? `${title} — Commit Activity` : "Commit Activity (Last Year)"}
       </h3>
-      <div className="h-64">
+      <div className="h-48 md:h-64">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <defs>

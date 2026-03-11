@@ -20,7 +20,7 @@ function timeAgo(dateStr: string): string {
 
 export function RecentCommits({ data, repoFullName }: RecentCommitsProps) {
   return (
-    <div className="bg-card border border-border rounded-lg p-6 animate-slide-up">
+    <div className="bg-card border border-border rounded-lg p-4 md:p-6 animate-slide-up">
       <h3 className="text-sm font-display uppercase tracking-wider text-muted-foreground mb-4">
         Recent Commits
       </h3>

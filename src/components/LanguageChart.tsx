@@ -22,11 +22,11 @@ export function LanguageChart({ data }: LanguageChartProps) {
     .slice(0, 6);
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 animate-slide-up">
+    <div className="bg-card border border-border rounded-lg p-4 md:p-6 animate-slide-up">
       <h3 className="text-sm font-display uppercase tracking-wider text-muted-foreground mb-4">
         Languages
       </h3>
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
         <div className="w-40 h-40">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

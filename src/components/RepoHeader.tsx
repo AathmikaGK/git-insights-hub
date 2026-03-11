@@ -17,7 +17,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
         </Avatar>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="text-xl font-bold font-display text-foreground">{repo.full_name}</h2>
+            <h2 className="text-lg md:text-xl font-bold font-display text-foreground">{repo.full_name}</h2>
             <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
             </a>
