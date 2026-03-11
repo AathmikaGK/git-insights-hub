@@ -16,7 +16,7 @@ const accentMap = {
 
 export function StatCard({ label, value, icon: Icon, accent = "green" }: StatCardProps) {
   return (
-    <div className="bg-card border border-border rounded-lg p-5 animate-slide-up">
+    <div className="bg-card border border-border rounded-lg p-3 md:p-5 animate-slide-up">
       <div className="flex items-center justify-between mb-3">
         <span className="text-xs text-muted-foreground uppercase tracking-wider font-display">{label}</span>
         <Icon className={`h-4 w-4 ${accentMap[accent]}`} />
