@@ -65,6 +65,11 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    background-image:
+      radial-gradient(circle at 8% 8%, hsl(var(--primary) / 0.18), transparent 40%),
+      radial-gradient(circle at 90% 15%, hsl(var(--accent) / 0.22), transparent 38%),
+      radial-gradient(circle at 40% 100%, hsl(var(--chart-blue) / 0.15), transparent 45%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -102,5 +107,20 @@
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
+  }
+
+  .glass-card {
+    background: linear-gradient(140deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.7));
+    backdrop-filter: blur(8px);
+  }
+
+  .page-shell {
+    @apply min-h-screen px-4 sm:px-6;
+  }
+
+  .aurora-header {
+    background:
+      linear-gradient(120deg, hsl(var(--primary) / 0.1), transparent 36%),
+      linear-gradient(300deg, hsl(var(--accent) / 0.18), transparent 48%);
   }
 }

@@ -30,7 +30,7 @@ export function RepoInput({ onSubmit, isLoading }: RepoInputProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
+    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto glass-card gradient-border rounded-xl p-3 sm:p-4">
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -38,7 +38,7 @@ export function RepoInput({ onSubmit, isLoading }: RepoInputProps) {
             value={value}
             onChange={(e) => { setValue(e.target.value); setError(""); }}
             placeholder="github.com/owner/repo or owner/repo"
-            className="pl-11 h-11 md:h-12 bg-secondary border-border font-display text-sm"
+            className="pl-11 h-11 md:h-12 bg-secondary/70 border-border font-display text-sm"
             disabled={isLoading}
           />
         </div>

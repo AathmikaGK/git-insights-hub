@@ -9,7 +9,7 @@ interface RepoHeaderProps {
 
 export function RepoHeader({ repo }: RepoHeaderProps) {
   return (
-    <div className="bg-card border border-border rounded-lg p-4 md:p-6 animate-slide-up">
+    <div className="glass-card gradient-border rounded-xl p-4 md:p-6 animate-slide-up shadow-lg shadow-black/20">
       <div className="flex items-start gap-3 md:gap-4">
         <Avatar className="h-12 w-12 border border-border">
           <AvatarImage src={repo.owner.avatar_url} alt={repo.owner.login} />
