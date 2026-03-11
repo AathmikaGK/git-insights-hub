@@ -10,7 +10,7 @@ export function ContributorList({ data }: ContributorListProps) {
   const top10 = data.slice(0, 10);
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 animate-slide-up">
+    <div className="bg-card border border-border rounded-lg p-4 md:p-6 animate-slide-up">
       <h3 className="text-sm font-display uppercase tracking-wider text-muted-foreground mb-4">
         Top Contributors
       </h3>
