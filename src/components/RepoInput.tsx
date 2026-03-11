@@ -31,18 +31,18 @@ export function RepoInput({ onSubmit, isLoading }: RepoInputProps) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
-      <div className="relative flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             value={value}
             onChange={(e) => { setValue(e.target.value); setError(""); }}
             placeholder="github.com/owner/repo or owner/repo"
-            className="pl-11 h-12 bg-secondary border-border font-display text-sm"
+            className="pl-11 h-11 md:h-12 bg-secondary border-border font-display text-sm"
             disabled={isLoading}
           />
         </div>
-        <Button type="submit" disabled={isLoading} className="h-12 px-6 font-display text-sm">
+        <Button type="submit" disabled={isLoading} className="h-11 md:h-12 px-6 font-display text-sm w-full sm:w-auto">
           {isLoading ? "Analyzing…" : "Analyze"}
         </Button>
       </div>
