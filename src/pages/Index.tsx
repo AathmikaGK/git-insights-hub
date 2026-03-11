@@ -108,7 +108,7 @@ const Index = () => {
           <RepoHeader repo={data.repo} />
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
             <StatCard label="Stars" value={data.repo.stargazers_count} icon={Star} accent="amber" />
             <StatCard label="Forks" value={data.repo.forks_count} icon={GitFork} accent="blue" />
             <StatCard label="Issues" value={data.repo.open_issues_count} icon={AlertCircle} accent="purple" />
