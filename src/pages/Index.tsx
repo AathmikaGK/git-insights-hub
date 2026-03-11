@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Star, GitFork, AlertCircle, Eye, Code2, Activity } from "lucide-react";
+import { Star, GitFork, AlertCircle, Eye, Activity, GitCompare } from "lucide-react";
 import { RepoInput } from "@/components/RepoInput";
 import { StatCard } from "@/components/StatCard";
 import { CommitTimeline } from "@/components/CommitTimeline";
