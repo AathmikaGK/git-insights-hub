@@ -70,9 +70,9 @@ const Compare = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container py-8 md:py-12">
+    <div className="page-shell">
+      <header className="aurora-header border-b border-border/70 rounded-b-3xl">
+        <div className="container py-8 md:py-12 px-0 sm:px-2">
           <div className="flex items-center gap-3 mb-6">
             <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors">
               <ArrowLeft className="h-5 w-5" />
@@ -80,14 +80,14 @@ const Compare = () => {
             <GitCompare className="h-5 w-5 text-accent animate-pulse-glow" />
             <h1 className="text-2xl md:text-3xl font-bold font-display glow-text">Compare Repos</h1>
           </div>
-          <form onSubmit={handleCompare} className="space-y-3 md:space-y-0 md:flex md:gap-3 md:items-end">
+          <form onSubmit={handleCompare} className="glass-card gradient-border rounded-xl p-3 sm:p-4 space-y-3 md:space-y-0 md:flex md:gap-3 md:items-end">
             <div className="flex-1">
               <label className="text-xs text-muted-foreground font-display uppercase tracking-wider mb-1 block">Repository A</label>
               <Input
                 value={repoA}
                 onChange={(e) => setRepoA(e.target.value)}
                 placeholder="owner/repo or GitHub URL"
-                className="h-11 bg-secondary border-border font-display text-sm"
+                className="h-11 bg-secondary/70 border-border font-display text-sm"
                 disabled={isLoading}
               />
             </div>
@@ -97,7 +97,7 @@ const Compare = () => {
                 value={repoB}
                 onChange={(e) => setRepoB(e.target.value)}
                 placeholder="owner/repo or GitHub URL"
-                className="h-11 bg-secondary border-border font-display text-sm"
+                className="h-11 bg-secondary/70 border-border font-display text-sm"
                 disabled={isLoading}
               />
             </div>
@@ -118,7 +118,7 @@ const Compare = () => {
       )}
 
       {dataA && dataB && (
-        <main className="container py-6 space-y-6">
+        <main className="container py-6 px-0 sm:px-2 space-y-6">
           {/* Headers side by side */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <RepoHeader repo={dataA.repo} />
@@ -171,17 +171,17 @@ function ComparisonBars({ dataA, dataB }: { dataA: CompareData; dataB: CompareDa
   ];
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4 md:p-6 animate-slide-up">
+    <div className="glass-card gradient-border rounded-xl p-4 md:p-6 animate-slide-up shadow-lg shadow-black/20">
       <h3 className="text-sm font-display uppercase tracking-wider text-muted-foreground mb-4">Head to Head</h3>
       <div className="space-y-4">
         {metrics.map((m) => {
           const max = Math.max(m.a, m.b, 1);
           return (
             <div key={m.label}>
-              <div className="flex justify-between text-xs font-display text-muted-foreground mb-1">
-                <span>{dataA.repo.name}: {m.a.toLocaleString()}</span>
-                <span className="text-foreground">{m.label}</span>
-                <span>{dataB.repo.name}: {m.b.toLocaleString()}</span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-3 text-xs font-display text-muted-foreground mb-1">
+                <span className="truncate">{dataA.repo.name}: {m.a.toLocaleString()}</span>
+                <span className="text-foreground text-left sm:text-center">{m.label}</span>
+                <span className="truncate text-left sm:text-right">{dataB.repo.name}: {m.b.toLocaleString()}</span>
               </div>
               <div className="flex gap-1 h-3">
                 <div className={`${m.color} rounded-l-sm transition-all duration-700`} style={{ width: `${(m.a / max) * 50}%` }} />
