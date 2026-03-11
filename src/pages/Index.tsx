@@ -70,19 +70,25 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Hero */}
       <header className="border-b border-border">
-        <div className="container py-12 md:py-20">
-          <div className="text-center mb-8">
+        <div className="container py-8 md:py-20 px-4">
+          <div className="text-center mb-6 md:mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Activity className="h-6 w-6 text-primary animate-pulse-glow" />
-              <h1 className="text-3xl md:text-4xl font-bold font-display glow-text">
+              <Activity className="h-5 w-5 md:h-6 md:w-6 text-primary animate-pulse-glow" />
+              <h1 className="text-2xl md:text-4xl font-bold font-display glow-text">
                 GitPulse
               </h1>
             </div>
-            <p className="text-muted-foreground max-w-md mx-auto">
+            <p className="text-sm md:text-base text-muted-foreground max-w-md mx-auto">
               Visualize any GitHub repository's pulse — commits, contributors, languages, and more.
             </p>
           </div>
           <RepoInput onSubmit={handleAnalyze} isLoading={isLoading} />
+          <div className="text-center mt-4">
+            <Link to="/compare" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors font-display">
+              <GitCompare className="h-4 w-4" />
+              Compare two repos
+            </Link>
+          </div>
         </div>
       </header>
 
