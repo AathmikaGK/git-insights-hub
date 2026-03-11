@@ -67,18 +67,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="page-shell">
       {/* Hero */}
-      <header className="border-b border-border">
-        <div className="container py-8 md:py-20 px-4">
+      <header className="aurora-header border-b border-border/70 rounded-b-3xl">
+        <div className="container py-8 md:py-20 px-0 sm:px-2">
           <div className="text-center mb-6 md:mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
               <Activity className="h-5 w-5 md:h-6 md:w-6 text-primary animate-pulse-glow" />
-              <h1 className="text-2xl md:text-4xl font-bold font-display glow-text">
+              <h1 className="text-2xl md:text-5xl font-bold font-display glow-text">
                 GitPulse
               </h1>
             </div>
-            <p className="text-sm md:text-base text-muted-foreground max-w-md mx-auto">
+            <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto px-2">
               Visualize any GitHub repository's pulse — commits, contributors, languages, and more.
             </p>
           </div>
@@ -104,7 +104,7 @@ const Index = () => {
 
       {/* Dashboard */}
       {data && (
-        <main className="container py-6 md:py-8 px-4 space-y-4 md:space-y-6">
+        <main className="container py-6 md:py-8 px-0 sm:px-2 space-y-4 md:space-y-6">
           <RepoHeader repo={data.repo} />
 
           {/* Stats Grid */}

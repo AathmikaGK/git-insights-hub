@@ -65,6 +65,11 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    background-image:
+      radial-gradient(circle at 8% 8%, hsl(var(--primary) / 0.18), transparent 40%),
+      radial-gradient(circle at 90% 15%, hsl(var(--accent) / 0.22), transparent 38%),
+      radial-gradient(circle at 40% 100%, hsl(var(--chart-blue) / 0.15), transparent 45%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -103,4 +108,92 @@
     mask-composite: exclude;
     pointer-events: none;
   }
+
+  .glass-card {
+    background: linear-gradient(140deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.7));
+    backdrop-filter: blur(8px);
+  }
+
+  .page-shell {
+    @apply min-h-screen px-4 sm:px-6;
+  }
+
+  .aurora-header {
+    background:
+      linear-gradient(120deg, hsl(var(--primary) / 0.1), transparent 36%),
+      linear-gradient(300deg, hsl(var(--accent) / 0.18), transparent 48%);
+  }
+}
+
+@layer utilities {
+  .battle-materialize {
+    animation: battle-materialize 700ms ease-out both;
+  }
+
+  .duel-cinematic {
+    animation: duel-flash 900ms ease-in-out;
+  }
+
+  .battle-shake {
+    animation: battle-shake 420ms ease-in-out;
+  }
+
+  .repo-engulf {
+    position: relative;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+  }
+
+  .repo-engulf::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.35), transparent 65%);
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 320ms ease;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .repo-engulf--active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.4), 0 0 20px hsl(var(--accent) / 0.3);
+  }
+
+  .repo-engulf--active::after {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  .repo-engulf > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@keyframes battle-materialize {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes duel-flash {
+  0% { box-shadow: 0 0 0 hsl(var(--accent) / 0); }
+  30% { box-shadow: 0 0 70px hsl(var(--chart-red) / 0.25), 0 0 30px hsl(var(--accent) / 0.3); }
+  100% { box-shadow: 0 0 0 hsl(var(--accent) / 0); }
+}
+
+@keyframes battle-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
 }
