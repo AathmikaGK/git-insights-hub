@@ -6,7 +6,7 @@ interface CommitTimelineProps {
   title?: string;
 }
 
-export function CommitTimeline({ data }: CommitTimelineProps) {
+export function CommitTimeline({ data, title }: CommitTimelineProps) {
   const chartData = data.map((week) => ({
     date: new Date(week.week * 1000).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
     commits: week.total,
