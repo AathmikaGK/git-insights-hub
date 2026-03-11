@@ -104,7 +104,7 @@ const Index = () => {
 
       {/* Dashboard */}
       {data && (
-        <main className="container py-8 space-y-6">
+        <main className="container py-6 md:py-8 px-4 space-y-4 md:space-y-6">
           <RepoHeader repo={data.repo} />
 
           {/* Stats Grid */}
