@@ -4,9 +4,10 @@ import { RepoInfo } from "@/lib/github";
 interface RepoAuraAvatarProps {
   repo: RepoInfo;
   size?: "sm" | "md";
+  avatarUrl?: string;
 }
 
-export function RepoAuraAvatar({ repo, size = "md" }: RepoAuraAvatarProps) {
+export function RepoAuraAvatar({ repo, size = "md", avatarUrl }: RepoAuraAvatarProps) {
   const energy = Math.min(100, repo.stargazers_count + repo.forks_count + repo.watchers_count);
   const orbitMs = 2800 - Math.min(1800, Math.floor(energy * 8));
   const ringOpacity = 0.2 + Math.min(0.45, energy / 220);
@@ -18,7 +19,7 @@ export function RepoAuraAvatar({ repo, size = "md" }: RepoAuraAvatarProps) {
   return (
     <div className={`repo-aura ${dimensions}`} style={auraStyle}>
       <div className="repo-aura__ring" style={{ opacity: ringOpacity }} />
-      <img src={repo.owner.avatar_url} alt={repo.owner.login} className="repo-aura__img" />
+      <img src={avatarUrl || repo.owner.avatar_url} alt={repo.owner.login} className="repo-aura__img" />
       <div className="repo-aura__badge">{initials}</div>
       <div className="repo-aura__orb" />
     </div>
