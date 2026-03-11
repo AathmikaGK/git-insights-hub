@@ -1,0 +1,29 @@
+import { LucideIcon } from "lucide-react";
+
+interface StatCardProps {
+  label: string;
+  value: string | number;
+  icon: LucideIcon;
+  accent?: "green" | "blue" | "purple" | "amber";
+}
+
+const accentMap = {
+  green: "text-chart-green",
+  blue: "text-chart-blue",
+  purple: "text-chart-purple",
+  amber: "text-chart-amber",
+};
+
+export function StatCard({ label, value, icon: Icon, accent = "green" }: StatCardProps) {
+  return (
+    <div className="bg-card border border-border rounded-lg p-5 animate-slide-up">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs text-muted-foreground uppercase tracking-wider font-display">{label}</span>
+        <Icon className={`h-4 w-4 ${accentMap[accent]}`} />
+      </div>
+      <p className={`text-2xl font-bold font-display ${accentMap[accent]}`}>
+        {typeof value === "number" ? value.toLocaleString() : value}
+      </p>
+    </div>
+  );
+}
