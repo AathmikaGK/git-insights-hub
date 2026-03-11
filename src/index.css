@@ -6,51 +6,51 @@
 
 @layer base {
   :root {
-    --background: 220 20% 8%;
-    --foreground: 210 20% 92%;
+    --background: 235 24% 4%;
+    --foreground: 230 45% 94%;
 
-    --card: 220 18% 12%;
-    --card-foreground: 210 20% 92%;
+    --card: 232 34% 8%;
+    --card-foreground: 230 45% 94%;
 
-    --popover: 220 18% 12%;
-    --popover-foreground: 210 20% 92%;
+    --popover: 232 34% 8%;
+    --popover-foreground: 230 45% 94%;
 
-    --primary: 142 71% 45%;
-    --primary-foreground: 220 20% 8%;
+    --primary: 217 92% 56%;
+    --primary-foreground: 235 24% 4%;
 
-    --secondary: 220 16% 18%;
-    --secondary-foreground: 210 20% 80%;
+    --secondary: 235 30% 14%;
+    --secondary-foreground: 230 45% 90%;
 
-    --muted: 220 14% 16%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 236 25% 12%;
+    --muted-foreground: 233 18% 68%;
 
-    --accent: 270 60% 60%;
-    --accent-foreground: 210 20% 92%;
+    --accent: 263 88% 64%;
+    --accent-foreground: 230 45% 94%;
 
     --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 92%;
+    --destructive-foreground: 230 45% 94%;
 
-    --border: 220 14% 20%;
-    --input: 220 14% 20%;
-    --ring: 142 71% 45%;
+    --border: 235 28% 20%;
+    --input: 235 28% 20%;
+    --ring: 217 92% 56%;
 
     --radius: 0.75rem;
 
-    --chart-green: 142 71% 45%;
-    --chart-blue: 210 90% 55%;
-    --chart-purple: 270 60% 60%;
-    --chart-amber: 38 92% 50%;
+    --chart-green: 217 92% 56%;
+    --chart-blue: 223 88% 63%;
+    --chart-purple: 263 88% 64%;
+    --chart-amber: 249 76% 60%;
     --chart-red: 0 72% 51%;
-    --chart-cyan: 187 85% 53%;
+    --chart-cyan: 231 95% 70%;
 
-    --sidebar-background: 220 18% 10%;
-    --sidebar-foreground: 210 20% 80%;
-    --sidebar-primary: 142 71% 45%;
-    --sidebar-primary-foreground: 220 20% 8%;
-    --sidebar-accent: 220 14% 16%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 220 14% 20%;
-    --sidebar-ring: 142 71% 45%;
+    --sidebar-background: 235 24% 6%;
+    --sidebar-foreground: 230 45% 90%;
+    --sidebar-primary: 217 92% 56%;
+    --sidebar-primary-foreground: 235 24% 4%;
+    --sidebar-accent: 236 25% 12%;
+    --sidebar-accent-foreground: 230 45% 94%;
+    --sidebar-border: 235 28% 20%;
+    --sidebar-ring: 217 92% 56%;
 
     --font-display: 'JetBrains Mono', monospace;
     --font-body: 'Inter', sans-serif;
@@ -66,9 +66,10 @@
     @apply bg-background text-foreground;
     font-family: var(--font-body);
     background-image:
-      radial-gradient(circle at 8% 8%, hsl(var(--primary) / 0.18), transparent 40%),
-      radial-gradient(circle at 90% 15%, hsl(var(--accent) / 0.22), transparent 38%),
-      radial-gradient(circle at 40% 100%, hsl(var(--chart-blue) / 0.15), transparent 45%);
+      radial-gradient(circle at 10% 12%, hsl(var(--primary) / 0.24), transparent 38%),
+      radial-gradient(circle at 88% 14%, hsl(var(--accent) / 0.26), transparent 40%),
+      radial-gradient(circle at 50% 100%, hsl(var(--chart-blue) / 0.20), transparent 46%),
+      linear-gradient(180deg, hsl(238 26% 4%), hsl(242 28% 3%));
     background-attachment: fixed;
   }
 
@@ -123,4 +124,118 @@
       linear-gradient(120deg, hsl(var(--primary) / 0.1), transparent 36%),
       linear-gradient(300deg, hsl(var(--accent) / 0.18), transparent 48%);
   }
+
+  .battle-materialize {
+    animation: battle-materialize 700ms ease-out both;
+  }
+
+  .duel-cinematic {
+    animation: duel-flash 900ms ease-in-out;
+  }
+
+  .battle-shake {
+    animation: battle-shake 420ms ease-in-out;
+  }
+
+  .repo-engulf {
+    position: relative;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+  }
+
+  .repo-engulf::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.35), transparent 65%);
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 320ms ease;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .repo-engulf--active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px hsl(var(--accent) / 0.4), 0 0 20px hsl(var(--accent) / 0.3);
+  }
+
+  .repo-engulf--active::after {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  .repo-engulf > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .repo-aura {
+    --orbit-duration: 2200ms;
+    @apply relative inline-grid place-items-center rounded-full;
+    background: radial-gradient(circle at 30% 30%, hsl(var(--chart-cyan) / 0.55), hsl(var(--accent) / 0.45) 60%, transparent 72%);
+    box-shadow: 0 0 24px hsl(var(--primary) / 0.35), inset 0 0 20px hsl(var(--accent) / 0.28);
+  }
+
+  .repo-aura__ring {
+    @apply absolute inset-0 rounded-full;
+    border: 1px solid hsl(var(--primary));
+    animation: aura-pulse 2000ms ease-in-out infinite;
+  }
+
+  .repo-aura__img {
+    @apply h-[84%] w-[84%] rounded-full object-cover border border-border;
+  }
+
+  .repo-aura__badge {
+    @apply absolute -bottom-1 -right-1 h-5 w-5 rounded-full grid place-items-center text-[10px] font-display font-bold text-white;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    box-shadow: 0 0 12px hsl(var(--accent) / 0.7);
+  }
+
+  .repo-aura__orb {
+    @apply absolute h-2 w-2 rounded-full;
+    top: 50%;
+    left: 50%;
+    background: hsl(var(--chart-cyan));
+    box-shadow: 0 0 12px hsl(var(--chart-cyan));
+    animation: aura-orbit var(--orbit-duration) linear infinite;
+  }
+}
+
+@keyframes battle-materialize {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes duel-flash {
+  0% { box-shadow: 0 0 0 hsl(var(--accent) / 0); }
+  30% { box-shadow: 0 0 70px hsl(var(--chart-red) / 0.25), 0 0 30px hsl(var(--accent) / 0.3); }
+  100% { box-shadow: 0 0 0 hsl(var(--accent) / 0); }
+}
+
+@keyframes battle-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+}
+
+
+@keyframes aura-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.65; }
+  50% { transform: scale(1.08); opacity: 0.2; }
+}
+
+@keyframes aura-orbit {
+  0% { transform: rotate(0deg) translateX(24px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(24px) rotate(-360deg); }
 }

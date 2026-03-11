@@ -15,6 +15,7 @@ import {
 } from "@/lib/github";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { RepoAuraAvatar } from "@/components/RepoAuraAvatar";
 
 interface CompareData {
   repo: RepoInfo;
@@ -252,7 +253,7 @@ function BattleCard({
     <section className={`glass-card gradient-border rounded-xl p-4 md:p-5 space-y-4 ${duelMode ? "battle-shake" : ""}`}>
       <div className="flex items-center gap-3">
         <div className="relative">
-          <img src={data.repo.owner.avatar_url} alt={data.repo.owner.login} className="h-14 w-14 rounded-full border border-border object-cover" />
+          <RepoAuraAvatar repo={data.repo} />
           <div className={`absolute -bottom-2 -right-2 h-7 w-7 rounded-full grid place-items-center text-[10px] font-display font-bold bg-gradient-to-br ${rune.aura} text-white border border-white/40`}>
             {rune.crest}
           </div>
