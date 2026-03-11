@@ -123,9 +123,7 @@
       linear-gradient(120deg, hsl(var(--primary) / 0.1), transparent 36%),
       linear-gradient(300deg, hsl(var(--accent) / 0.18), transparent 48%);
   }
-}
 
-@layer utilities {
   .battle-materialize {
     animation: battle-materialize 700ms ease-out both;
   }
