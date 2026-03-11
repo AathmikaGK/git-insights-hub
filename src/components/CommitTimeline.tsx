@@ -3,6 +3,7 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 
 interface CommitTimelineProps {
   data: CommitActivity[];
+  title?: string;
 }
 
 export function CommitTimeline({ data }: CommitTimelineProps) {
