@@ -25,4 +25,3 @@ Set this in Vercel project settings for server-side video generation:
 
 - `NANO_BANANA_API_KEY`
 - Optional: `NANO_BANANA_API_URL` (override model endpoint)
-- Optional: `NANO_BANANA_RESPONSE_MODALITIES` (comma-separated, e.g. `TEXT,IMAGE` default; set to video-capable values only if your endpoint supports them)

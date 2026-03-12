@@ -23,9 +23,7 @@ export function NanoBananaAvatarPanel({
 }: NanoBananaAvatarPanelProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState("");
-  const [warning, setWarning] = useState("");
-  const [mediaType, setMediaType] = useState<"video" | "image" | null>(null);
-  const [mediaUrl, setMediaUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
 
   const prompt = useMemo(
     () => buildNanoBananaPrompt(repo, { commitActivity, languages, className: repoClass, title, vibeRoast }),
@@ -35,7 +33,6 @@ export function NanoBananaAvatarPanel({
   const handleGenerate = async () => {
     setIsGenerating(true);
     setError("");
-    setWarning("");
 
     try {
       const res = await fetch("/api/nano-banana-video", {
@@ -49,13 +46,11 @@ export function NanoBananaAvatarPanel({
         throw new Error(data?.error ?? `Video generation failed (${res.status})`);
       }
 
-      if (!data?.mediaDataUrl || !data?.mediaType) {
-        throw new Error("Nano Banana did not return playable media.");
+      if (!data?.videoDataUrl) {
+        throw new Error("Nano Banana did not return a playable video.");
       }
 
-      setMediaType(data.mediaType);
-      setMediaUrl(data.mediaDataUrl);
-      if (data.warning) setWarning(data.warning);
+      setVideoUrl(data.videoDataUrl);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate video.");
     } finally {
@@ -80,22 +75,16 @@ export function NanoBananaAvatarPanel({
         </Button>
       </div>
 
-      {mediaUrl && mediaType === "video" ? (
+      {videoUrl ? (
         <video
-          key={mediaUrl}
+          key={videoUrl}
           controls
           autoPlay
           loop
           muted
           playsInline
           className="w-full rounded-md border border-border bg-background/60 max-h-56 object-cover"
-          src={mediaUrl}
-        />
-      ) : mediaUrl && mediaType === "image" ? (
-        <img
-          src={mediaUrl}
-          alt="Nano Banana generated media"
-          className="w-full rounded-md border border-border bg-background/60 max-h-56 object-cover"
+          src={videoUrl}
         />
       ) : (
         <div className="w-full rounded-md border border-dashed border-border/70 bg-background/40 px-3 py-4 text-[11px] text-muted-foreground font-display">
@@ -103,7 +92,6 @@ export function NanoBananaAvatarPanel({
         </div>
       )}
 
-      {warning && <p className="text-[11px] text-amber-300">{warning}</p>}
       {error && <p className="text-[11px] text-destructive">{error}</p>}
     </div>
   );

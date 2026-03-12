@@ -1,11 +1,3 @@
-const parseModalities = () => {
-  const raw = process.env.NANO_BANANA_RESPONSE_MODALITIES;
-  if (!raw) return ["TEXT", "IMAGE"];
-  return raw.split(",").map((s) => s.trim()).filter(Boolean);
-};
-
-const toDataUrl = (mimeType: string, base64: string) => `data:${mimeType};base64,${base64}`;
-
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -25,8 +17,6 @@ export default async function handler(req: any, res: any) {
     process.env.NANO_BANANA_API_URL ??
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
 
-  const responseModalities = parseModalities();
-
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -34,7 +24,7 @@ export default async function handler(req: any, res: any) {
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          responseModalities,
+          responseModalities: ["VIDEO", "TEXT"],
         },
       }),
     });
@@ -48,34 +38,14 @@ export default async function handler(req: any, res: any) {
     }
 
     const parts = data?.candidates?.[0]?.content?.parts ?? [];
+    const videoPart = parts.find((p: any) => p?.inlineData?.data && String(p?.inlineData?.mimeType || "").startsWith("video/"));
 
-    const videoInline = parts.find(
-      (p: any) => p?.inlineData?.data && String(p?.inlineData?.mimeType || "").startsWith("video/"),
-    );
-
-    if (videoInline?.inlineData?.data) {
-      return res.status(200).json({
-        mediaType: "video",
-        mediaDataUrl: toDataUrl(videoInline.inlineData.mimeType, videoInline.inlineData.data),
-      });
+    if (!videoPart?.inlineData?.data) {
+      return res.status(502).json({ error: "No video returned from Nano Banana" });
     }
 
-    const imageInline = parts.find(
-      (p: any) => p?.inlineData?.data && String(p?.inlineData?.mimeType || "").startsWith("image/"),
-    );
-
-    if (imageInline?.inlineData?.data) {
-      return res.status(200).json({
-        mediaType: "image",
-        mediaDataUrl: toDataUrl(imageInline.inlineData.mimeType, imageInline.inlineData.data),
-        warning:
-          "Endpoint did not return video. Showing generated image instead. Configure NANO_BANANA_API_URL + NANO_BANANA_RESPONSE_MODALITIES for a video-capable model.",
-      });
-    }
-
-    return res.status(502).json({
-      error:
-        "No playable media returned from Nano Banana. If you need video, configure a video-capable endpoint in NANO_BANANA_API_URL and response modalities in NANO_BANANA_RESPONSE_MODALITIES.",
+    return res.status(200).json({
+      videoDataUrl: `data:${videoPart.inlineData.mimeType};base64,${videoPart.inlineData.data}`,
     });
   } catch (error) {
     return res.status(500).json({ error: error instanceof Error ? error.message : "Unknown server error" });
