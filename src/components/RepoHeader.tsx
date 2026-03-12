@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RepoInfo } from "@/lib/github";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
@@ -9,6 +10,8 @@ interface RepoHeaderProps {
 }
 
 export function RepoHeader({ repo }: RepoHeaderProps) {
+  const [generatedAvatarUrl, setGeneratedAvatarUrl] = useState("");
+
   return (
     <div className="glass-card gradient-border rounded-xl p-4 md:p-6 animate-slide-up shadow-lg shadow-black/20">
       <div className="flex items-start gap-3 md:gap-4">
