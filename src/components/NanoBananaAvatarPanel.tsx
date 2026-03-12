@@ -1,11 +1,8 @@
 import { useMemo, useState } from "react";
-import { Sparkles, ClipboardCopy, Link2, WandSparkles } from "lucide-react";
+import { Sparkles, Video, Loader2 } from "lucide-react";
 import { RepoInfo, CommitActivity, LanguageBreakdown } from "@/lib/github";
-import { buildGeneratedDescription, buildNanoBananaPrompt } from "@/lib/avatarPrompt";
-import { generateNanoBananaAvatar } from "@/lib/nanoBanana";
+import { buildNanoBananaPrompt } from "@/lib/avatarPrompt";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 interface NanoBananaAvatarPanelProps {
   repo: RepoInfo;
@@ -14,7 +11,6 @@ interface NanoBananaAvatarPanelProps {
   repoClass?: string;
   title?: string;
   vibeRoast?: string;
-  onAvatarUrlChange: (url: string) => void;
 }
 
 export function NanoBananaAvatarPanel({
@@ -24,47 +20,39 @@ export function NanoBananaAvatarPanel({
   repoClass,
   title,
   vibeRoast,
-  onAvatarUrlChange,
 }: NanoBananaAvatarPanelProps) {
-  const [apiKey, setApiKey] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState("");
-
-  const generatedDescription = useMemo(
-    () => buildGeneratedDescription(repo, { commitActivity, languages, className: repoClass, title, vibeRoast }),
-    [repo, commitActivity, languages, repoClass, title, vibeRoast],
-  );
+  const [videoUrl, setVideoUrl] = useState("");
 
   const prompt = useMemo(
     () => buildNanoBananaPrompt(repo, { commitActivity, languages, className: repoClass, title, vibeRoast }),
     [repo, commitActivity, languages, repoClass, title, vibeRoast],
   );
 
-  const copyPrompt = async () => {
-    try {
-      await navigator.clipboard.writeText(prompt);
-      setError("");
-    } catch {
-      setError("Clipboard access is blocked in this browser session.");
-    }
-  };
-
   const handleGenerate = async () => {
-    if (!apiKey.trim()) {
-      setError("Enter your Nano Banana API key to generate an avatar.");
-      return;
-    }
-
     setIsGenerating(true);
     setError("");
 
     try {
-      const generated = await generateNanoBananaAvatar(apiKey.trim(), prompt);
-      setAvatarUrl(generated);
-      onAvatarUrlChange(generated);
+      const res = await fetch("/api/nano-banana-video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error ?? `Video generation failed (${res.status})`);
+      }
+
+      if (!data?.videoDataUrl) {
+        throw new Error("Nano Banana did not return a playable video.");
+      }
+
+      setVideoUrl(data.videoDataUrl);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to generate avatar.");
+      setError(err instanceof Error ? err.message : "Failed to generate video.");
     } finally {
       setIsGenerating(false);
     }
@@ -74,60 +62,35 @@ export function NanoBananaAvatarPanel({
     <div className="rounded-lg border border-border bg-secondary/30 p-2.5 space-y-2.5">
       <div className="flex items-center justify-between gap-2">
         <p className="text-[11px] font-display uppercase tracking-wider text-muted-foreground inline-flex items-center gap-1">
-          <Sparkles className="h-3 w-3" /> Nano Banana Avatar
+          <Sparkles className="h-3 w-3" /> Nano Banana Video
         </p>
-        <Button size="sm" variant="ghost" onClick={copyPrompt} className="h-7 px-2 text-[11px] font-display">
-          <ClipboardCopy className="h-3 w-3" /> Copy Prompt
-        </Button>
-      </div>
-
-      <p className="text-[11px] text-muted-foreground leading-relaxed">
-        Generated description: <span className="text-foreground">{generatedDescription}</span>
-      </p>
-
-      <Textarea
-        readOnly
-        value={prompt}
-        className="min-h-[92px] text-[11px] bg-background/70 font-mono"
-      />
-
-      <a
-        href="https://gemini.google.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-[11px] text-primary hover:text-accent transition-colors font-display inline-flex items-center gap-1"
-      >
-        <Link2 className="h-3 w-3" /> Open Gemini Nano Banana
-      </a>
-
-      <Input
-        type="password"
-        placeholder="Enter Nano Banana API key"
-        value={apiKey}
-        onChange={(e) => setApiKey(e.target.value)}
-        className="h-8 text-xs bg-background/70"
-      />
-
-      <div className="flex gap-2">
         <Button
           onClick={handleGenerate}
           disabled={isGenerating}
-          className="h-8 text-xs font-display bg-gradient-to-r from-primary to-accent"
+          size="sm"
+          className="h-7 px-2 text-[11px] font-display bg-gradient-to-r from-primary to-accent"
         >
-          <WandSparkles className="h-3.5 w-3.5" /> {isGenerating ? "Generating…" : "Generate via API"}
+          {isGenerating ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Video className="h-3.5 w-3.5" />}
+          {isGenerating ? "Generating…" : "Generate Video"}
         </Button>
-
-        <Input
-          placeholder="Or paste generated avatar image URL"
-          value={avatarUrl}
-          onChange={(e) => {
-            const value = e.target.value;
-            setAvatarUrl(value);
-            onAvatarUrlChange(value);
-          }}
-          className="h-8 text-xs bg-background/70"
-        />
       </div>
+
+      {videoUrl ? (
+        <video
+          key={videoUrl}
+          controls
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full rounded-md border border-border bg-background/60 max-h-56 object-cover"
+          src={videoUrl}
+        />
+      ) : (
+        <div className="w-full rounded-md border border-dashed border-border/70 bg-background/40 px-3 py-4 text-[11px] text-muted-foreground font-display">
+          Generate to display Nano Banana video here.
+        </div>
+      )}
 
       {error && <p className="text-[11px] text-destructive">{error}</p>}
     </div>

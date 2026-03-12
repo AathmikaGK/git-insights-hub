@@ -15,7 +15,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
   return (
     <div className="glass-card gradient-border rounded-xl p-4 md:p-6 animate-slide-up shadow-lg shadow-black/20">
       <div className="flex items-start gap-3 md:gap-4">
-        <RepoAuraAvatar repo={repo} avatarUrl={generatedAvatarUrl} />
+        <RepoAuraAvatar repo={repo} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="text-lg md:text-xl font-bold font-display text-foreground">{repo.full_name}</h2>
@@ -38,7 +38,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
             ))}
           </div>
 
-          <NanoBananaAvatarPanel repo={repo} onAvatarUrlChange={setGeneratedAvatarUrl} />
+          <NanoBananaAvatarPanel repo={repo} />
         </div>
       </div>
     </div>

@@ -246,7 +246,6 @@ function BattleCard({
   duelMode: boolean;
   side: "left" | "right";
 }) {
-  const [generatedAvatarUrl, setGeneratedAvatarUrl] = useState("");
   const winner = stats.health + stats.defense + stats.agility > rival.health + rival.defense + rival.agility;
   const rune = getAvatarRune(data.repo, stats);
   const healthWidth = duelMode ? Math.max(7, stats.health - Math.round(rival.damage * 0.25)) : stats.health;
@@ -255,7 +254,7 @@ function BattleCard({
     <section className={`glass-card gradient-border rounded-xl p-4 md:p-5 space-y-4 ${duelMode ? "battle-shake" : ""}`}>
       <div className="flex items-center gap-3">
         <div className="relative">
-          <RepoAuraAvatar repo={data.repo} avatarUrl={generatedAvatarUrl} />
+          <RepoAuraAvatar repo={data.repo} />
           <div className={`absolute -bottom-2 -right-2 h-7 w-7 rounded-full grid place-items-center text-[10px] font-display font-bold bg-gradient-to-br ${rune.aura} text-white border border-white/40`}>
             {rune.crest}
           </div>
@@ -297,7 +296,6 @@ function BattleCard({
         repoClass={stats.className}
         title={stats.title}
         vibeRoast={stats.vibeRoast}
-        onAvatarUrlChange={setGeneratedAvatarUrl}
       />
       <div className={`text-xs font-display ${winner ? "text-primary" : "text-chart-red"} flex items-center gap-2`}>
         {winner ? <Sword className="h-3.5 w-3.5" /> : <Skull className="h-3.5 w-3.5" />}

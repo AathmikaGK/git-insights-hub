@@ -18,3 +18,10 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+
+## Environment
+
+Set this in Vercel project settings for server-side video generation:
+
+- `NANO_BANANA_API_KEY`
+- Optional: `NANO_BANANA_API_URL` (override model endpoint)
